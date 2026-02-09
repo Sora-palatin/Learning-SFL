@@ -1,0 +1,114 @@
+================================================================================
+CIFAR10 - Multi-Tenant SFL 训练日志
+================================================================================
+
+训练过程:
+--------------------------------------------------------------------------------
+Round   1: Time=8.1s, Loss=2.0002, Test Acc=10.05%, Split Layer=4
+Round   2: Time=16.2s, Loss=1.6648, Test Acc=23.43%, Split Layer=4
+Round   3: Time=24.4s, Loss=1.7818, Test Acc=30.79%, Split Layer=4
+Round   4: Time=32.7s, Loss=1.5256, Test Acc=34.39%, Split Layer=4
+Round   5: Time=41.2s, Loss=1.4362, Test Acc=36.09%, Split Layer=4
+Round   6: Time=49.4s, Loss=1.2339, Test Acc=39.07%, Split Layer=4
+Round   7: Time=57.6s, Loss=1.2082, Test Acc=42.16%, Split Layer=4
+Round   8: Time=65.8s, Loss=1.1395, Test Acc=40.55%, Split Layer=4
+Round   9: Time=74.0s, Loss=1.1354, Test Acc=39.15%, Split Layer=4
+Round  10: Time=82.0s, Loss=1.0982, Test Acc=41.38%, Split Layer=4
+Round  11: Time=90.2s, Loss=1.0466, Test Acc=38.76%, Split Layer=4
+Round  12: Time=98.6s, Loss=1.0233, Test Acc=42.59%, Split Layer=4
+Round  13: Time=106.5s, Loss=0.8451, Test Acc=39.90%, Split Layer=4
+Round  14: Time=114.7s, Loss=0.8720, Test Acc=44.73%, Split Layer=4
+Round  15: Time=123.0s, Loss=0.9231, Test Acc=45.13%, Split Layer=4
+Round  16: Time=131.0s, Loss=0.9049, Test Acc=43.11%, Split Layer=4
+Round  17: Time=139.4s, Loss=0.7897, Test Acc=38.30%, Split Layer=4
+Round  18: Time=147.6s, Loss=0.7776, Test Acc=39.21%, Split Layer=4
+Round  19: Time=155.8s, Loss=0.7574, Test Acc=41.95%, Split Layer=4
+Round  20: Time=163.8s, Loss=0.6491, Test Acc=41.81%, Split Layer=4
+Round  21: Time=172.0s, Loss=0.6210, Test Acc=46.49%, Split Layer=4
+Round  22: Time=180.2s, Loss=0.6003, Test Acc=44.82%, Split Layer=4
+Round  23: Time=188.4s, Loss=0.5734, Test Acc=42.99%, Split Layer=4
+Round  24: Time=196.5s, Loss=0.5671, Test Acc=42.57%, Split Layer=4
+Round  25: Time=204.9s, Loss=0.5084, Test Acc=40.15%, Split Layer=4
+Round  26: Time=213.0s, Loss=0.4058, Test Acc=46.01%, Split Layer=4
+Round  27: Time=221.2s, Loss=0.4706, Test Acc=45.08%, Split Layer=4
+Round  28: Time=229.3s, Loss=0.4337, Test Acc=44.65%, Split Layer=4
+Round  29: Time=237.4s, Loss=0.3762, Test Acc=46.59%, Split Layer=4
+Round  30: Time=245.6s, Loss=0.3559, Test Acc=50.04%, Split Layer=4
+Round  31: Time=253.9s, Loss=0.3486, Test Acc=46.63%, Split Layer=4
+Round  32: Time=262.0s, Loss=0.2736, Test Acc=42.47%, Split Layer=4
+Round  33: Time=270.3s, Loss=0.2434, Test Acc=48.87%, Split Layer=4
+Round  34: Time=278.3s, Loss=0.2710, Test Acc=48.25%, Split Layer=4
+Round  35: Time=286.5s, Loss=0.2489, Test Acc=45.16%, Split Layer=4
+Round  36: Time=294.5s, Loss=0.1997, Test Acc=47.31%, Split Layer=4
+Round  37: Time=302.6s, Loss=0.2120, Test Acc=47.99%, Split Layer=4
+Round  38: Time=310.8s, Loss=0.2124, Test Acc=51.01%, Split Layer=4
+Round  39: Time=319.0s, Loss=0.2159, Test Acc=47.80%, Split Layer=4
+Round  40: Time=327.1s, Loss=0.2084, Test Acc=51.21%, Split Layer=4
+Round  41: Time=335.1s, Loss=0.1540, Test Acc=50.38%, Split Layer=4
+Round  42: Time=343.3s, Loss=0.1686, Test Acc=51.20%, Split Layer=4
+Round  43: Time=351.7s, Loss=0.1541, Test Acc=47.33%, Split Layer=4
+Round  44: Time=360.2s, Loss=0.1725, Test Acc=48.83%, Split Layer=4
+Round  45: Time=368.4s, Loss=0.1596, Test Acc=49.96%, Split Layer=4
+Round  46: Time=376.5s, Loss=0.1634, Test Acc=50.44%, Split Layer=4
+Round  47: Time=381.8s, Loss=0.1026, Test Acc=50.31%, Split Layer=4
+Round  48: Time=390.0s, Loss=0.1336, Test Acc=48.49%, Split Layer=4
+Round  49: Time=398.2s, Loss=0.1287, Test Acc=49.88%, Split Layer=4
+Round  50: Time=406.3s, Loss=0.0839, Test Acc=49.18%, Split Layer=4
+Round  51: Time=414.3s, Loss=0.0967, Test Acc=51.04%, Split Layer=4
+Round  52: Time=422.4s, Loss=0.1310, Test Acc=48.54%, Split Layer=4
+Round  53: Time=430.4s, Loss=0.0984, Test Acc=50.39%, Split Layer=4
+Round  54: Time=438.4s, Loss=0.0831, Test Acc=51.53%, Split Layer=4
+Round  55: Time=446.5s, Loss=0.0702, Test Acc=51.48%, Split Layer=4
+Round  56: Time=454.6s, Loss=0.0710, Test Acc=52.40%, Split Layer=4
+Round  57: Time=462.7s, Loss=0.0476, Test Acc=51.18%, Split Layer=4
+Round  58: Time=470.9s, Loss=0.0527, Test Acc=52.73%, Split Layer=4
+Round  59: Time=478.9s, Loss=0.0543, Test Acc=53.48%, Split Layer=4
+Round  60: Time=487.0s, Loss=0.0568, Test Acc=53.05%, Split Layer=4
+Round  61: Time=495.3s, Loss=0.0317, Test Acc=53.18%, Split Layer=4
+Round  62: Time=503.5s, Loss=0.0472, Test Acc=53.18%, Split Layer=4
+Round  63: Time=511.7s, Loss=0.0403, Test Acc=51.68%, Split Layer=4
+Round  64: Time=519.8s, Loss=0.0349, Test Acc=52.15%, Split Layer=4
+Round  65: Time=528.1s, Loss=0.0219, Test Acc=53.72%, Split Layer=4
+Round  66: Time=536.3s, Loss=0.0224, Test Acc=53.78%, Split Layer=4
+Round  67: Time=544.4s, Loss=0.0193, Test Acc=53.45%, Split Layer=4
+Round  68: Time=552.5s, Loss=0.0238, Test Acc=53.98%, Split Layer=4
+Round  69: Time=560.5s, Loss=0.0303, Test Acc=53.71%, Split Layer=4
+Round  70: Time=568.5s, Loss=0.0160, Test Acc=53.56%, Split Layer=4
+Round  71: Time=576.8s, Loss=0.0228, Test Acc=53.76%, Split Layer=4
+Round  72: Time=585.1s, Loss=0.0253, Test Acc=53.57%, Split Layer=4
+Round  73: Time=593.1s, Loss=0.0193, Test Acc=52.72%, Split Layer=4
+Round  74: Time=601.0s, Loss=0.0232, Test Acc=53.41%, Split Layer=4
+Round  75: Time=609.1s, Loss=0.0184, Test Acc=53.64%, Split Layer=4
+Round  76: Time=617.2s, Loss=0.0159, Test Acc=53.02%, Split Layer=4
+Round  77: Time=625.3s, Loss=0.0137, Test Acc=53.61%, Split Layer=4
+Round  78: Time=633.6s, Loss=0.0172, Test Acc=53.69%, Split Layer=4
+Round  79: Time=641.7s, Loss=0.0074, Test Acc=54.30%, Split Layer=4
+Round  80: Time=650.0s, Loss=0.0048, Test Acc=55.15%, Split Layer=4
+Round  81: Time=658.1s, Loss=0.0051, Test Acc=55.61%, Split Layer=4
+Round  82: Time=666.1s, Loss=0.0040, Test Acc=55.56%, Split Layer=4
+Round  83: Time=674.4s, Loss=0.0039, Test Acc=55.47%, Split Layer=4
+Round  84: Time=682.6s, Loss=0.0028, Test Acc=55.83%, Split Layer=4
+Round  85: Time=690.8s, Loss=0.0024, Test Acc=55.58%, Split Layer=4
+Round  86: Time=698.9s, Loss=0.0034, Test Acc=55.25%, Split Layer=4
+Round  87: Time=707.0s, Loss=0.0080, Test Acc=55.71%, Split Layer=4
+Round  88: Time=715.1s, Loss=0.0018, Test Acc=55.30%, Split Layer=4
+Round  89: Time=723.4s, Loss=0.0018, Test Acc=55.27%, Split Layer=4
+Round  90: Time=731.6s, Loss=0.0011, Test Acc=55.68%, Split Layer=4
+Round  91: Time=739.8s, Loss=0.0067, Test Acc=54.52%, Split Layer=4
+Round  92: Time=748.0s, Loss=0.0021, Test Acc=55.09%, Split Layer=4
+Round  93: Time=756.3s, Loss=0.0031, Test Acc=55.20%, Split Layer=4
+Round  94: Time=764.5s, Loss=0.0020, Test Acc=55.58%, Split Layer=4
+Round  95: Time=772.6s, Loss=0.0009, Test Acc=55.47%, Split Layer=4
+Round  96: Time=780.7s, Loss=0.0013, Test Acc=55.78%, Split Layer=4
+Round  97: Time=788.8s, Loss=0.0009, Test Acc=55.99%, Split Layer=4
+Round  98: Time=797.0s, Loss=0.0008, Test Acc=55.59%, Split Layer=4
+Round  99: Time=805.0s, Loss=0.0010, Test Acc=55.92%, Split Layer=4
+Round 100: Time=813.0s, Loss=0.0008, Test Acc=55.95%, Split Layer=4
+
+================================================================================
+最终结果:
+================================================================================
+  最终测试准确率: 55.95%
+  最佳测试准确率: 55.99%
+  总训练时间: 813.0秒
+  最终切分层: 4
