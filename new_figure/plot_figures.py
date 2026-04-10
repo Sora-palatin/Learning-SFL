@@ -1,8 +1,8 @@
 """
-KDD论文热力图生成脚本
-- 热力图1/2: figsize=(3.5, 3.0), 单栏宽度, fontsize=10, 无标题
-- 热力图3: figsize=(7.0, 2.5), 双栏宽度, 1×3子图, aspect='auto', 无标题
-- 输出PDF到 new_figure/ 目录
+KDD
+- 1/2: figsize=(3.5, 3.0), , fontsize=10,
+- 3: figsize=(7.0, 2.5), , 1×3, aspect='auto',
+- PDF new_figure/
 """
 import sys
 import os
@@ -18,7 +18,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from configs.config import Config, RESNET_PROFILE
 from core.physics import SystemPhysics
 
-# ── 全局字体设置 ──
+# ── ──
 rcParams.update({
     'font.size': 18,
     'font.sans-serif': ['Arial', 'DejaVu Sans'],
@@ -31,7 +31,7 @@ OUTPUT_DIR = os.path.dirname(__file__)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-# ── 数据计算（复用 theory_validation 逻辑）──
+# ── theory_validation ──
 
 class ClientType:
     def __init__(self, f, tau, data_size=50):
@@ -73,24 +73,24 @@ def compute_grids(alpha=0.7, beta=0.5, mu=0.1):
     return v_grid, R_grid, f_range, tau_range, physics
 
 
-# ── 热力图 1+2 合并: V分布 + R分布 (单画布, 严格对齐) ──
+# ── 1+2 : V + R (, ) ──
 
 def plot_heatmap12_combined(v_grid, R_grid, f_range, tau_range):
-    """在一张画布上绘制 V 图(左) 和 R 图(右), 使用 make_axes_locatable
-    固定 colorbar 宽度, 确保两个子图主体区域严格一致."""
+ """ V () R (), make_axes_locatable
+    Fix colorbar width to ensure both subplot bodies are perfectly aligned."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.0, 3.0))
 
     ext = [f_range[0]-0.05, f_range[-1]+0.05,
            tau_range[0]-0.05, tau_range[-1]+0.05]
 
-    # ── 左: V 图 (Optimal Cut-off Layer) ──
+ # ── : V (Optimal Cut-off Layer) ──
     im1 = ax1.imshow(v_grid, cmap='RdYlBu_r', aspect='auto', origin='lower',
                      extent=ext, vmin=1, vmax=5)
     for i in range(len(f_range)+1):
         ax1.axvline(f_range[0] + i*0.1 - 0.05, color='gray', linewidth=0.3, alpha=0.3)
     for i in range(len(tau_range)+1):
         ax1.axhline(tau_range[0] + i*0.1 - 0.05, color='gray', linewidth=0.3, alpha=0.3)
-    # 刻度放在网格线边缘(右/上边界): 0.2→0.25, 0.4→0.45, 0.6→0.65, 0.8→0.85, 1.0→1.05
+ # (/): 0.2→0.25, 0.4→0.45, 0.6→0.65, 0.8→0.85, 1.0→1.05
     tick_positions = [0.25, 0.45, 0.65, 0.85, 1.05]
     tick_labels = ['0.2', '0.4', '0.6', '0.8', '1.0']
     ax1.set_xticks(tick_positions)
@@ -107,7 +107,7 @@ def plot_heatmap12_combined(v_grid, R_grid, f_range, tau_range):
     cbar1.ax.set_yticklabels(['$v$=1\n(Shallow)', '$v$=2', '$v$=3', '$v$=4', '$v$=5\n(Deep)'],
                              fontsize=8)
 
-    # ── 右: R 图 (Optimal Reward) ──
+ # ── : R (Optimal Reward) ──
     im2 = ax2.imshow(R_grid, cmap='RdYlBu_r', aspect='auto', origin='lower',
                      extent=ext)
     for i in range(len(f_range)+1):
@@ -131,15 +131,15 @@ def plot_heatmap12_combined(v_grid, R_grid, f_range, tau_range):
     plt.savefig(out, bbox_inches='tight')
     print(f'  Saved: {out}')
 
-    # ── 拆分保存: 从同一画布提取各子图, 保证尺寸严格一致 ──
+ # ── : , ──
     for ax_i, cax_i, fname in [(ax1, cax1, 'heatmap1.pdf'),
                                 (ax2, cax2, 'heatmap2.pdf')]:
-        # 合并 ax 和 colorbar 的 bounding box
+ # ax colorbar bounding box
         renderer = fig.canvas.get_renderer()
         bb_ax = ax_i.get_tightbbox(renderer)
         bb_cb = cax_i.get_tightbbox(renderer)
         bb = bb_ax.union([bb_ax, bb_cb])
-        bb_expanded = bb.expanded(1.08, 1.08)  # 留少量边距
+        bb_expanded = bb.expanded(1.08, 1.08)  # small margin for readability
         out_i = os.path.join(OUTPUT_DIR, fname)
         fig.savefig(out_i, bbox_inches=bb_expanded.transformed(fig.dpi_scale_trans.inverted()))
         print(f'  Saved: {out_i}')
@@ -147,7 +147,7 @@ def plot_heatmap12_combined(v_grid, R_grid, f_range, tau_range):
     plt.close()
 
 
-# ── 热力图 3: 客户端收益 (1×3 子图) ──
+# ── 3: (1×3 ) ──
 
 def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
     typical_clients = [
@@ -156,7 +156,7 @@ def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
         {'name': 'Strongest Client', 'f': 1.0, 'tau': 0.1, 'color': 'red'},
     ]
 
-    # 预计算
+ # 
     max_R_all = 0
     vmin_all, vmax_all = np.inf, -np.inf
     client_data = []
@@ -178,7 +178,7 @@ def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
     R_range = np.linspace(R_min, R_max, R_steps)
     v_range = list(range(1, 6))
 
-    # 预计算所有utility范围以统一colorbar
+ # utilitycolorbar
     for data in client_data:
         costs = data['costs']
         for R in R_range:
@@ -187,7 +187,7 @@ def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
                 vmin_all = min(vmin_all, u)
                 vmax_all = max(vmax_all, u)
 
-    # figsize=(10, 3), 子图间距极小, 右侧留空给共享colorbar
+ # figsize=(10, 3), , colorbar
     fig, axes = plt.subplots(1, 3, figsize=(7, 3))
     fig.subplots_adjust(left=0.06, right=0.88, wspace=0.05)
     plt.rcParams.update({'font.size': 18})
@@ -224,14 +224,14 @@ def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
                        f'$U_c^*={optimal_Uc:.4f}$'),
                 zorder=10)
 
-        # x轴标签只在中间子图显示
+ # x
         ax.set_xticks(v_range)
         if idx == 1:
             ax.set_xlabel('Cut-off Layer $v_k$', fontweight='bold')
         else:
             ax.set_xlabel('')
 
-        # y轴标签只在最左子图
+ # y
         if idx == 0:
             ax.set_ylabel('Reward $R_k$', fontweight='bold')
         else:
@@ -241,10 +241,10 @@ def plot_heatmap3(v_grid, R_grid, f_range, tau_range, physics):
                         borderaxespad=0.3, handletextpad=0.4)
         ax.grid(True, alpha=0.3)
 
-        # 子图标题
+ # 
         ax.set_title(ci['name'], fontsize=10, fontweight='bold', color=ci['color'])
 
-    # 共享 Colorbar: 放在最右侧, 高度与子图一致
+ # Colorbar: , 
     cbar_ax = fig.add_axes([0.90, 0.15, 0.015, 0.72])  # [left, bottom, width, height]
     cbar = fig.colorbar(ims[-1], cax=cbar_ax, ticks=[-100, -50, 0, 50, 100])
     cbar.set_label('$U_c$', fontweight='bold')

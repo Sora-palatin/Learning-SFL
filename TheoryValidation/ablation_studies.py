@@ -240,7 +240,7 @@ class AblationStudies:
         
         output_file = os.path.join(self.output_dir, 'ablation1_no_data_subsidy.png')
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
-        # 同时保存到 new_figure 目录
+ # new_figure 
         new_fig_dir = os.path.join(os.path.dirname(os.path.dirname(self.output_dir)), 'new_figure')
         os.makedirs(new_fig_dir, exist_ok=True)
         for ext in ['png', 'pdf']:
@@ -350,7 +350,7 @@ class AblationStudies:
         
         output_file = os.path.join(self.output_dir, 'ablation2_no_incentive.png')
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
-        # 同时保存到 new_figure 目录
+ # new_figure 
         new_fig_dir = os.path.join(os.path.dirname(os.path.dirname(self.output_dir)), 'new_figure')
         os.makedirs(new_fig_dir, exist_ok=True)
         for ext in ['png', 'pdf']:
@@ -643,7 +643,7 @@ class AblationStudies:
         
         output_file = os.path.join(self.output_dir, 'ablation3_no_online_learning.png')
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
-        # 同时保存到 new_figure 目录
+ # new_figure 
         new_fig_dir = os.path.join(os.path.dirname(os.path.dirname(self.output_dir)), 'new_figure')
         os.makedirs(new_fig_dir, exist_ok=True)
         for ext in ['png', 'pdf']:

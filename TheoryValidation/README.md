@@ -9,11 +9,10 @@ This module contains all code for the **theory validation** and **ablation studi
 | File | Description |
 |------|-------------|
 | `theory_validation.py` | Main theory validation script: generates heatmaps (optimal cut-layer distribution, reward distribution, client utility) and regret convergence curves |
-| `regret_convergence.py` | OCD-UCB regret convergence experiment: validates the convergence performance of the online learning algorithm |
+| `regret_convergence.py` | LENS-UCB regret convergence experiment: validates the convergence performance of the online learning algorithm |
 | `ablation_studies.py` | Ablation studies: removes data subsidy, incentive mechanism, and online learning components respectively to observe system performance changes |
 | `generate_ablation_comparison.py` | Ablation comparison figure generation script |
-| `run_validation.bat` | Windows batch execution script |
-| `ablation/` | Ablation study result figures |
+| `ablation/` | Ablation study output directory (auto-generated) |
 
 ## How to Run
 
@@ -27,8 +26,8 @@ python regret_convergence.py
 # Run ablation studies
 python ablation_studies.py
 
-# Or run all at once via batch script
-run_validation.bat
+# Generate ablation comparison plots
+python generate_ablation_comparison.py
 ```
 
 ## Dependencies

@@ -1,8 +1,8 @@
 # Core: math logic and Agent
-from .agent import OCDUCB_Agent
+from .agent import LENSUCB_Agent
 from .physics import SystemPhysics
 
 __all__ = [
-    "OCDUCB_Agent",
+    "LENSUCB_Agent",
     "SystemPhysics",
 ]

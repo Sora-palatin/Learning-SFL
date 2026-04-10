@@ -1,6 +1,6 @@
 """
-简化版Non-IID实验
-直接运行四种方法在Non-IID CIFAR-10上的对比实验
+Non-IID
+Non-IID CIFAR-10
 """
 
 import torch
@@ -15,7 +15,7 @@ from matplotlib import rcParams
 import os
 import sys
 
-from trainer import SplitFedTrainer, MultiTenantTrainer, OCDUCBTrainer, FullInfoTrainer
+from trainer import SplitFedTrainer, MultiTenantTrainer, LENSUCBTrainer, FullInfoTrainer
 from data_quality_manager import DataQualityManager, MethodBasedDataAllocator, NoisySubset
 from non_iid_config import (
     IID_RESULTS, NON_IID_EXPECTED, PLOT_CONFIG, 
@@ -113,7 +113,7 @@ def main():
     print(f"Dirichlet α={EXPERIMENT_CONFIG['alpha']} | {EXPERIMENT_CONFIG['num_clients']} clients | {EXPERIMENT_CONFIG['num_rounds']} rounds")
     print("="*80)
     
-    # 配置
+ # 
     num_clients = EXPERIMENT_CONFIG['num_clients']
     num_rounds = EXPERIMENT_CONFIG['num_rounds']
     clients_per_round = EXPERIMENT_CONFIG['clients_per_round']
@@ -121,28 +121,28 @@ def main():
     alpha = EXPERIMENT_CONFIG['alpha']
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
-    # 显式显示CUDA使用状态
+ # CUDA
     print(f"\n{'='*80}")
-    print("硬件配置")
+ print("")
     print(f"{'='*80}")
     if torch.cuda.is_available():
-        print(f"✓ 使用 CUDA 加速")
-        print(f"  GPU设备: {torch.cuda.get_device_name(0)}")
-        print(f"  显存: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
+ print(f"✓ CUDA ")
+ print(f" GPU: {torch.cuda.get_device_name(0)}")
+ print(f" : {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
     else:
-        print(f"✗ CUDA不可用，使用CPU")
+ print(f"✗ CUDACPU")
     print(f"{'='*80}")
     
-    # 打印预期结果
-    print("\n预期结果对比 (基于IID CIFAR-10实际结果):")
+ # 
+ print("\n (IID CIFAR-10):")
     print_expected_results()
     
-    # 创建输出目录
+ # 
     output_dir = './results/non_iid'
     os.makedirs(output_dir, exist_ok=True)
     
-    # 加载数据集
-    print("\n加载CIFAR-10数据集...")
+ # 
+ print("\nCIFAR-10...")
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
@@ -155,73 +155,73 @@ def main():
         root='./data', train=False, download=True, transform=transform
     )
     
-    print(f"[OK] 训练集: {len(train_dataset)}, 测试集: {len(test_dataset)}")
+ print(f"[OK] : {len(train_dataset)}, : {len(test_dataset)}")
     
-    # Dirichlet划分
-    print(f"\nDirichlet划分 (α={alpha})...")
+ # Dirichlet
+ print(f"\nDirichlet (α={alpha})...")
     np.random.seed(42)
     client_indices, client_class_dist = dirichlet_partition(
         train_dataset, num_clients, alpha=alpha, num_classes=10
     )
     
     avg_classes = np.sum(client_class_dist > 0.01, axis=1).mean()
-    print(f"[OK] 平均有效类别数: {avg_classes:.2f}")
+ print(f"[OK] : {avg_classes:.2f}")
     
-    # 显示切分点-数据质量信息（适配Non-IID）
+ # -Non-IID
     print("\n" + "="*80)
-    print("切分点-数据质量机制 (Non-IID环境)")
+ print("- (Non-IID)")
     print("="*80)
-    print("\n核心机制：切分层越深 → 数据量越多，但Non-IID使类别更不平衡")
-    print("\n各切分层的数据质量：")
+ print("\n → Non-IID")
+ print("\n")
     print("-"*80)
-    print("切分层1 (SplitFed使用):")
-    print("  - 数据量: 5%")
-    print("  - 类别范围: 仅4个类别")
-    print("  - 标签噪声: 30%")
-    print("  - Non-IID影响: 极度不平衡，某些客户端可能只有1-2个有效类别")
+ print("1 (SplitFed):")
+ print(" - : 5%")
+ print(" - : 4")
+ print(" - : 30%")
+ print(" - Non-IID: 1-2")
     print()
-    print("切分层3 (Multi-Tenant SFL起点):")
-    print("  - 数据量: 35%")
-    print("  - 类别范围: 8个类别")
-    print("  - 标签噪声: 无")
-    print("  - Non-IID影响: 中度不平衡，主要类别占比过高")
+ print("3 (Multi-Tenant SFL):")
+ print(" - : 35%")
+ print(" - : 8")
+ print(" - : ")
+ print(" - Non-IID: ")
     print()
-    print("切分层4-7 (COIN-UCB动态调整范围):")
-    print("  - 数据量: 50%-90%")
-    print("  - 类别范围: 全部10个类别")
-    print("  - 标签噪声: 无")
-    print("  - Non-IID影响: 轻度不平衡，但数据量足够")
+ print("4-7 (COIN-UCB):")
+ print(" - : 50%-90%")
+ print(" - : 10")
+ print(" - : ")
+ print(" - Non-IID: ")
     print()
-    print("切分层8 (Full-Info使用):")
-    print("  - 数据量: 100%")
-    print("  - 类别范围: 全部10个类别")
-    print("  - 标签噪声: 无")
-    print("  - Non-IID影响: 完整数据但仍存在类别不平衡")
+ print("8 (Full-Info):")
+ print(" - : 100%")
+ print(" - : 10")
+ print(" - : ")
+ print(" - Non-IID: ")
     print("-"*80)
-    print("\n关键差异：")
-    print("  IID环境：相同切分层下，数据类别相对均匀")
-    print("  Non-IID环境：相同切分层下，数据集中在2-3个主要类别")
-    print("  结果：Non-IID使所有切分层的数据质量都变差")
+ print("\n")
+ print(" IID")
+ print(" Non-IID2-3")
+ print(" Non-IID")
     print("="*80)
     
-    # 四种方法（与IID实验完全一致）
+ # IID
     methods = {
-        'SplitFed': SplitFedTrainer,        # 固定切分层1
-        'Multi-Tenant SFL': MultiTenantTrainer,  # 从切分层3开始
-        'Full-Info': FullInfoTrainer,        # 固定切分层8（理论上界）
-        'COIN-UCB': OCDUCBTrainer           # 动态调整切分层（我们的方法）
+ 'SplitFed': SplitFedTrainer, # 1
+ 'Multi-Tenant SFL': MultiTenantTrainer, # 3
+ 'Full-Info': FullInfoTrainer, # 8（）
+ 'COIN-UCB': LENSUCBTrainer # （）
     }
     
     results = {}
     
-    # 运行实验
+ # 
     for method_name, TrainerClass in methods.items():
         print(f"\n{'='*80}")
-        print(f"运行 {method_name}...")
+ print(f" {method_name}...")
         print(f"{'='*80}")
         
         try:
-            # 创建训练器（max_batches_per_client=5，与IID实验完全一致）
+ # max_batches_per_client=5IID
             trainer = TrainerClass(
                 dataset_name='cifar10',
                 train_dataset=train_dataset,
@@ -233,43 +233,43 @@ def main():
                 max_batches_per_client=5
             )
             
-            # 用NonIIDDataQualityManager替换原始DQM
+ # NonIIDDataQualityManagerDQM
             from non_iid_experiment import NonIIDDataQualityManager
             noniid_dqm = NonIIDDataQualityManager(train_dataset, num_clients)
             noniid_dqm.client_indices = client_indices
             trainer.dqm = noniid_dqm
             trainer.allocator = MethodBasedDataAllocator(noniid_dqm)
-            print(f"注入Non-IID数据分配（含额外噪声惩罚）...")
+ print(f"Non-IID...")
             
-            # 训练
-            print(f"开始训练 {num_rounds} 轮...")
+ # 
+ print(f" {num_rounds} ...")
             trainer.train(num_rounds=num_rounds, lr=0.01)
             
-            # 保存结果
+ # 
             results[method_name] = trainer.history
             
             result_file = os.path.join(output_dir, f'non_iid_{method_name.lower().replace("-", "_")}.txt')
             trainer.save_history(result_file)
             
             final_acc = trainer.history['test_acc'][-1] if trainer.history['test_acc'] else 0
-            print(f"[OK] {method_name} 完成 - 最终准确率: {final_acc:.2f}%")
+ print(f"[OK] {method_name} - : {final_acc:.2f}%")
             
         except Exception as e:
-            print(f"[ERROR] {method_name} 失败: {str(e)}")
+ print(f"[ERROR] {method_name} : {str(e)}")
             import traceback
             traceback.print_exc()
             continue
     
-    # 生成对比图
+ # 
     if len(results) > 0:
         print(f"\n{'='*80}")
-        print("生成对比图...")
+ print("...")
         print(f"{'='*80}")
         
-        print(f"\n生成对比图...")
+ print(f"\n...")
         fig, ax = plt.subplots(1, 1, figsize=(10, 6))
         
-        # 配色与results目录下的图保持一致
+ # results
         colors = {
             'SplitFed': 'red', 
             'Multi-Tenant SFL': 'orange', 
@@ -277,13 +277,13 @@ def main():
             'Full-Info': 'green'
         }
         markers = {
-            'SplitFed': 'o',      # 红色圆圈
-            'Multi-Tenant SFL': 's',  # 橙色方块
-            'COIN-UCB': '^',      # 蓝色三角
-            'Full-Info': 'D'      # 绿色菱形
+ 'SplitFed': 'o', #
+ 'Multi-Tenant SFL': 's', #
+ 'COIN-UCB': '^', #
+ 'Full-Info': 'D' #
         }
         
-        # 测试准确率曲线
+ # 
         for method_name, history in results.items():
             if 'test_acc' in history and len(history['test_acc']) > 0:
                 rounds = list(range(1, len(history['test_acc']) + 1))
@@ -305,13 +305,13 @@ def main():
         plt.savefig(plot_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"[OK] 对比图已保存: {plot_path}")
+ print(f"[OK] : {plot_path}")
         
-        # 打印总结（对比实际结果与预期）
+ # 
         print(f"\n{'='*80}")
-        print("实验结果总结 (Non-IID vs IID)")
+ print(" (Non-IID vs IID)")
         print(f"{'='*80}")
-        print(f"{'方法':<20} {'IID准确率':<12} {'Non-IID实际':<15} {'预期范围':<15} {'性能下降':<10}")
+ print(f"{'':<20} {'IID':<12} {'Non-IID':<15} {'':<15} {'':<10}")
         print("-"*80)
         
         for method_name, history in results.items():
@@ -328,16 +328,16 @@ def main():
                       f"{exp_min:>5.1f}-{exp_max:<5.1f}%    {actual_drop:>5.2f}% {status}")
         
         print(f"{'='*80}")
-        print("\n关键发现:")
-        print("1. SplitFed: 固定切分层1，Non-IID使数据质量更差")
-        print("2. Multi-Tenant SFL: 从切分层3开始，数据异构影响明显")
-        print("3. COIN-UCB: 动态调整切分层，适应数据异构，性能下降最小 [OK]")
-        print("4. Full-Info: 理论上界，即使100%数据仍受异构影响")
+ print("\n:")
+ print("1. SplitFed: 1Non-IID")
+ print("2. Multi-Tenant SFL: 3")
+ print("3. COIN-UCB: [OK]")
+ print("4. Full-Info: 100%")
         print(f"{'='*80}")
     else:
-        print("\n[WARNING] 没有成功完成的实验")
+ print("\n[WARNING] ")
     
-    print("\n实验完成！")
+ print("\n")
 
 
 if __name__ == '__main__':

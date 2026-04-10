@@ -6,7 +6,7 @@ This module compares four methods on three real-world datasets (MNIST, Fashion-M
 
 1. **SplitFed**: No incentive mechanism; clients misreport and receive the worst data allocation (cut layer 1)
 2. **Multi-Tenant SFL**: Conventional incentive mechanism with free-rider problem; medium data allocation (cut layer 4)
-3. **OCD-UCB**: Our proposed method with intelligent allocation and progressive optimization (cut layers 2-7)
+3. **LENS-UCB**: Our proposed method with intelligent allocation and progressive optimization (cut layers 2-7)
 4. **Full-Info**: Full information scenario as the theoretical upper bound; optimal data allocation (cut layer 8)
 
 ## Core Design
@@ -18,9 +18,9 @@ Deeper cut layer → Higher client computation → Better data quality
 | Cut Layer | Data Quality | Data Ratio | Used By |
 |-----------|-------------|------------|---------|
 | 1 | Worst | 10% | SplitFed |
-| 2-3 | Low | 25-40% | OCD-UCB (early) |
+| 2-3 | Low | 25-40% | LENS-UCB (early) |
 | 4 | Medium | 55% | Multi-Tenant |
-| 5-7 | Good | 70-90% | OCD-UCB (mid-late) |
+| 5-7 | Good | 70-90% | LENS-UCB (mid-late) |
 | 8 | Optimal | 100% | Full-Info |
 
 ## File Structure
@@ -85,7 +85,7 @@ results/
 ├── test_mnist_results.txt               # MNIST result summary
 ├── test_mnist_SplitFed.txt             # SplitFed training log
 ├── test_mnist_Multi-Tenant_SFL.txt     # Multi-Tenant training log
-├── test_mnist_OCD-UCB.txt              # OCD-UCB training log
+├── test_mnist_LENS-UCB.txt              # LENS-UCB training log
 ├── test_mnist_Full-Info.txt            # Full-Info training log
 └── ... (results for other datasets)
 ```
@@ -113,7 +113,7 @@ results/
 
 - **SplitFed**: Fixed cut layer 1 (shallowest), 10% data quality, no incentive
 - **Multi-Tenant SFL**: Fixed cut layer 4 (medium), 55% data quality, conventional incentive
-- **OCD-UCB**: Dynamic cut layers (2-3 early, 4-5 mid, 6-7 late), 25-90% data quality, intelligent allocation
+- **LENS-UCB**: Dynamic cut layers (2-3 early, 4-5 mid, 6-7 late), 25-90% data quality, intelligent allocation
 - **Full-Info**: Fixed cut layer 8 (deepest), 100% data quality, theoretical upper bound
 
 ## Notes

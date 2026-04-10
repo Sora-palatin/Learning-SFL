@@ -1,10 +1,10 @@
 """
-KDD论文 - 准确率收敛曲线 (MNIST / FMNIST / CIFAR-10)
-- 全局字体 7pt
-- 合并版 figsize=(7.0, 2.2), 1×3 子图, 双栏宽度, 更扁
-- Legend 顶部水平排列 ncol=4
-- 无标题, bbox_inches='tight'
-- 输出 PDF 到 new_figure/
+KDD - (MNIST / FMNIST / CIFAR-10)
+- 7pt
+- figsize=(7.0, 2.2), 1×3 , ,
+- Legend ncol=4
+- , bbox_inches='tight'
+- PDF new_figure/
 """
 import os
 import re
@@ -13,7 +13,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
-# ── 全局字体设置 ──
+# ── ──
 rcParams.update({
     'font.size': 7,
     'font.sans-serif': ['Arial', 'DejaVu Sans'],
@@ -48,7 +48,7 @@ def load_dataset_histories(dataset_name):
     method_files = {
         'SplitFed':          'SplitFed',
         'Multi-Tenant SFL':  'Multi-Tenant_SFL',
-        'COIN-UCB':          'OCD-UCB',
+        'COIN-UCB':          'LENS-UCB',
         'Full-Info':         'Full-Info',
     }
     histories = {}
@@ -74,7 +74,7 @@ def main():
         'Full-Info':        {'color': 'green',  'ls': '-',  'marker': 'o', 'label': 'Full-Info'},
     }
 
-    # ── 合并版 (7.0×2.2, 1×3, 更扁) ──
+ # ── (7.0×2.2, 1×3, ) ──
     fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.2))
     for col, (ds_key, ds_label) in enumerate(datasets):
         ax = axes[col]
@@ -104,8 +104,8 @@ def main():
     plt.close()
     print(f'Saved: {out}')
 
-    # ── 独立版 (每个子图单独保存, 比例与合并版一致) ──
-    # 合并版 7.0×2.2 → tight_layout后每列约 2.33 英寸宽
+ # ── (, ) ──
+ # 7.0×2.2 → tight_layout 2.33 
     single_w = 7.0 / 3.0  # ≈ 2.33
     single_h = 2.2
 

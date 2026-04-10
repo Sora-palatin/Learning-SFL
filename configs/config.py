@@ -14,7 +14,7 @@ class Config:
     MODE: str = "SIMULATION"
 
     # --- Utility coefficients (Eq.3) ---
-    # 归一化权重：ALPHA + BETA = 1
+ # ALPHA + BETA = 1
     ALPHA: float = 0.6     # computation weight
     BETA: float = 0.4      # communication weight  
     MU: float = 0.1        # data subsidy
@@ -42,11 +42,11 @@ class Config:
 # Measured from actual SplitResNet18 model on CIFAR-10 (32x32 images)
 # Key insight: W increases exponentially, D decreases exponentially
 RESNET_PROFILE = {
-    1: {'W': 0.07, 'D': 1.33},  # Conv1: 轻计算，重传输 (Data Expansion)
-    2: {'W': 0.32, 'D': 1.33},  # Layer1: 中计算，重传输 (Worst case for weak clients)
-    3: {'W': 0.54, 'D': 0.67},  # Layer2: 计算加重，数据减半 (Sweet spot?)
-    4: {'W': 0.76, 'D': 0.33},  # Layer3: 重计算，轻传输
-    5: {'W': 1.00, 'D': 0.17},  # Layer4: 全计算，微传输
+    1: {'W': 0.07, 'D': 1.33},  # Conv1: light compute, heavy transmission (Data Expansion)
+    2: {'W': 0.32, 'D': 1.33},  # Layer1: moderate compute, heavy transmission (Worst case for weak clients)
+    3: {'W': 0.54, 'D': 0.67},  # Layer2: heavier compute, half data volume (Sweet spot?)
+    4: {'W': 0.76, 'D': 0.33},  # Layer3: heavy compute, light transmission
+    5: {'W': 1.00, 'D': 0.17},  # Layer4: full compute, minimal transmission
 }
 
 # 20 Heterogeneous Client Types
