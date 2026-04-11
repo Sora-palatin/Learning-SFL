@@ -36,7 +36,6 @@ This repository contains the source code for the LENS-SFL paper, which proposes 
 │   ├── plot_figures.py        # Heatmap figures
 │   └── plot_accuracy.py       # Accuracy curves
 │
-├── pac_fig/                    # All paper figures (PDF + PNG)
 ├── results/                    # Experiment results
 └── utils/                      # Utility functions
 ```
